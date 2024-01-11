@@ -1,0 +1,11 @@
+[
+  {
+    "targets": [
+      "proxima.demo.com:443"
+    ],
+    "labels": {
+      "job": "node",
+      "instance": "proxima.demo.com"
+    }
+  }
+]

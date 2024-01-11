@@ -1,0 +1,47 @@
+global:
+  scrape_interval:     15s
+  evaluation_interval: 15s
+
+  # Attach these labels to any time series or alerts when communicating with
+  # external systems (federation, remote storage, Alertmanager).
+  external_labels:
+      monitor: 'openmetrics-docker'
+
+# A scrape configuration containing exactly one endpoint to scrape.
+scrape_configs:
+  - job_name: 'proximanginx'
+    metrics_path: /api/service/monitor/nginx/metrics
+    scheme: https
+    scrape_interval: 30s
+    file_sd_configs:
+      - files:
+          - scrape_configs/proxima.json
+
+  - job_name: 'proximanode'
+    metrics_path: /api/service/monitor/node/metrics
+    scheme: https
+    scrape_interval: 15s
+    file_sd_configs:
+      - files:
+          - scrape_configs/proxima.json
+
+  - job_name: 'proximaswitch'
+    metrics_path: /api/service/monitor/switch/metrics
+    scheme: https
+    scrape_interval: 30s
+    file_sd_configs:
+      - files:
+          - scrape_configs/proxima.json
+
+  - job_name: 'proximaxmpp'
+    metrics_path: /api/service/monitor/xmpp/metrics
+    scheme: https
+    scrape_interval: 30s
+    file_sd_configs:
+      - files:
+          - scrape_configs/proxima.json
+
+  - job_name: 'prometheus'
+    scrape_interval: 10s
+    static_configs:
+      - targets: ['localhost:9090']
