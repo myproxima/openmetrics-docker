@@ -27,24 +27,9 @@ Containers:
 
 ## Setup Prometheus
 
-Go into `openmetrics-docker/prometheus/scrape_configs` directory and edit the file `proxima.json`.  
-Remove in JSON the placeholder object:
-
-```json
-  {
-    "targets": [
-      "proxima.demo.com:443"
-    ],
-    "labels": {
-      "job": "node",
-      "instance": "proxima.demo.com"
-    }
-  }
-```
-
-Add one object for each machine you need to monitor by replacing `proxima.demo.com` with the server's FQDN address.  
-You can add new servers by editing the file without the need to stop the service.
-
+Go into `openmetrics-docker/prometheus` directory and edit the file `prometheus.yml`.  
+Add a scrape_config for each queue that you need to monitor. See `https://prometheus.io/docs/prometheus/latest/configuration/configuration/#scrape_config`
+You can use the job "JOB_NAME" as an example. Remember to replace JOB_NAME, metrics_path, FQDN, QUEUE_NAME and QUEUE_EXTENSION.
 
 ## Setup Grafana
 

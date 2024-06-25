@@ -1,47 +1,22 @@
 global:
-  scrape_interval:     15s
-  evaluation_interval: 15s
+  scrape_interval:     5s
+  evaluation_interval: 5s
 
   # Attach these labels to any time series or alerts when communicating with
   # external systems (federation, remote storage, Alertmanager).
   external_labels:
-      monitor: 'openmetrics-docker'
+      monitor: 'cc_openmetrics'
 
 # A scrape configuration containing exactly one endpoint to scrape.
+# Replace JOB_NAME, metrics_path, FQDN, QUEUE_NAME and QUEUE_EXTENSION.
 scrape_configs:
-  - job_name: 'proximanginx'
-    metrics_path: /api/service/monitor/nginx/metrics
+  - job_name: 'JOB_NAME'
+    metrics_path: /api/service/monitor/cc/QUEUE_UUID/TOKENUSER_TOKENPASS/metrics
     scheme: https
-    scrape_interval: 30s
-    file_sd_configs:
-      - files:
-          - scrape_configs/proxima.json
-
-  - job_name: 'proximanode'
-    metrics_path: /api/service/monitor/node/metrics
-    scheme: https
-    scrape_interval: 15s
-    file_sd_configs:
-      - files:
-          - scrape_configs/proxima.json
-
-  - job_name: 'proximaswitch'
-    metrics_path: /api/service/monitor/switch/metrics
-    scheme: https
-    scrape_interval: 30s
-    file_sd_configs:
-      - files:
-          - scrape_configs/proxima.json
-
-  - job_name: 'proximaxmpp'
-    metrics_path: /api/service/monitor/xmpp/metrics
-    scheme: https
-    scrape_interval: 30s
-    file_sd_configs:
-      - files:
-          - scrape_configs/proxima.json
-
-  - job_name: 'prometheus'
-    scrape_interval: 10s
+    scrape_interval: 5s
     static_configs:
-      - targets: ['localhost:9090']
+      - targets: ['FQDN:443']
+        labels:
+          pbx: 'FQDN'
+          queue: 'QUEUE_NAME'
+          extqueue: 'QUEUE_EXTENSION'
